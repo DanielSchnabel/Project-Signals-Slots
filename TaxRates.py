@@ -9,7 +9,7 @@ class TaxRate(QObject):
 
     def __init__(self, parent = None):
         super().__init__(parent)
-        self.rate = 17.5
+        self._rate = 17.5
 
     def rate(self):
         return self.rate
@@ -28,10 +28,10 @@ class Form(QDialog):
         self.rate = TaxRate()
 
 
-        self.rateLabel = QLabel("Tax rate is "+ str(self.rate.rate))
+        self.rateLabel = QLabel("Tax rate is "+ str(self.rate._rate))
         self.spinBox = QDoubleSpinBox()
         self.spinBox.setRange(.01, 10000000.00)
-        self.spinBox.setValue(self.rate.rate)
+        self.spinBox.setValue(self.rate._rate)
 
         grid = QGridLayout()
         grid.addWidget(self.rateLabel, 0, 0)
@@ -39,17 +39,9 @@ class Form(QDialog):
         self.setLayout(grid)
         self.setWindowTitle("Tax Rate")
         self.spinBox.valueChanged.connect(self.updateUi)
-        rate = self.rate.rate
-        self.rateLabel.text = str(self.rate.rate)
-
-
 
     def updateUi(self):
-        to = self.spinBox.currentText()
-        from_ = self.fromspinBox.currentText()
-        amount = self.rate.setRate()
-        self.toLabel.setText("%0.2f" % amount)
-
+        self.rateLabel.setText("Tax rate changed to" + str(self.spinBox.value()))
 
 
 if __name__ == "__main__":
