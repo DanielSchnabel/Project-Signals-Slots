@@ -8,9 +8,6 @@ class TaxRate(QObject):
         super().__init__(parent)
         self.rate = 17.5
 
-    def rate(self):
-        return self.rate
-
 class Form(QDialog):
     def __init__(self, parent = None):
         super().__init__(parent)
